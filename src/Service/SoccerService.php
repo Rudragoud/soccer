@@ -59,12 +59,33 @@ class SoccerService
         return $players;
     }
 
-    public function validateByIds($playIds, $foundIds){
-        return array_diff($playIds,$foundIds    );
+    public function getPlayers($teamId) {
+         $result =  $this->entityManager->getRepository(Player::class)->findBy(['team' => $teamId]);
+        $players = [];
+        if($result != null){
+          foreach ($result as $key => $value) {
+            $temp['firstName'] = $value->getFirstName();
+            $temp['lastName'] = $value->getLastName();
+            $players[] = $temp;
+          }
+        }
     }
 
-    public function getPlayerIndTeam($teamId){
-        $players = $this->entityManager->getRepository(Player::class)->findBy(array("team" => $teamId));
+
+   public function validateByIds($playIds, $foundIds){
+        return array_diff($playIds,$foundIds);
+    }
+
+    public function getPlayerOfTeam($teamId){
+        $result = $this->entityManager->getRepository(Player::class)->findBy(array("team" => $teamId));
+         $players = [];
+        if($result != null){
+          foreach ($result as $key => $value) {
+            $temp['firstName'] = $value->getFirstName();
+            $temp['lastName'] = $value->getLastName();
+            $players[] = $temp;
+          }
+        }
         return $players;
     }
 }

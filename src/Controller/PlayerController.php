@@ -47,11 +47,11 @@ class PlayerController extends AbstractController
         $entityManager->persist($player);
         $entityManager->flush();
 
-        return $this->json(['status' => 'success','teams' => ['id' => $player->getId()]]);
+        return $this->json(['status' => 'success','player' => ['id' => $player->getId()]]);
     }
 
     /**
-     * @Route("/create-team-player", name="create-team-player")
+     * @Route("/create-team-player", name="create-team-player", methods={"POST"})
      */
     public function createTeamPlayers(SoccerService $soccerService,\Symfony\Component\HttpFoundation\Request $request){
         $requestData = json_decode($request->getContent(),true);
