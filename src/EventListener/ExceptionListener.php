@@ -13,6 +13,7 @@ class ExceptionListener
         // You get the exception object from the received event
         $exception = $event->getException();
         $message = json_encode(array(
+            'status' => 'failed',
             'message' => sprintf('says: %s with code: %s',
             $exception->getMessage(),
             $exception->getCode())

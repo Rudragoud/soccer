@@ -14,7 +14,7 @@ use Symfony\Component\Form\FormInterface;
 class TeamController extends AbstractController
 {
     /**
-     * @Route("/team", name="team", methods={"GET"})
+     * @Route("/api/team", name="team", methods={"GET"})
      * @param EntityManagerInterface $entityManager
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
@@ -34,7 +34,7 @@ class TeamController extends AbstractController
     }
 
     /**
-     * @Route("/create-team", name="create-team", methods = {"POST"})
+     * @Route("/api/team", name="create-team", methods = {"POST"})
      * @param $request \Symfony\Component\HttpFoundation\Request
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
@@ -58,8 +58,9 @@ class TeamController extends AbstractController
     }
 
     /**
-     * @Route("/team-players/{id}", name="team-players", methods={"GET"})
+     * @Route("/api/team-player/{id}", name="get-team", methods={"GET"})
      */
+
     public function getPlayerInTeam($id, SoccerService $soccerService){
         $teamPlayers = $soccerService->getPlayerOfTeam($id);
         return $this->json(['status' => 'success','players' => $teamPlayers]);
@@ -89,7 +90,7 @@ class TeamController extends AbstractController
     }
 
     /**
-     * @Route("/team-players/{id}", name="team-players", methods={"DELETE"})
+     * @Route("/api/team/{id}", name="delete-team", methods={"DELETE"})
      */
     public function deleteTeam($id, EntityManagerInterface $entityManager){
         $team = $entityManager->getRepository(Team::class)->find($id);

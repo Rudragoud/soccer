@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class PlayerController extends AbstractController
 {
     /**
-     * @Route("/player", name="player")
+     * @Route("/api/player", name="player" , methods={"GET"})
      */
     public function index()
     {
@@ -25,11 +25,11 @@ class PlayerController extends AbstractController
                 $playerArray[] = $temp;
             }
         }
-        return $this->json(['status' => 'success','players' => $playerArray]);
+        return $this->json(['status' => 'success','data' => ['players' => $playerArray]]);
     }
 
     /**
-     * @Route("/create-player", name="create-player")
+     * @Route("/api/player", name="create-player", methods={"POST"})
      * @param $request \Symfony\Component\HttpFoundation\Request
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
@@ -47,15 +47,15 @@ class PlayerController extends AbstractController
         $entityManager->persist($player);
         $entityManager->flush();
 
-        return $this->json(['status' => 'success','player' => ['id' => $player->getId()]]);
+        return $this->json(['status' => 'success','data' => ['id' => $player->getId()]]);
     }
 
     /**
-     * @Route("/create-team-player", name="create-team-player", methods={"POST"})
+     * @Route("/api/create-team-player", name="create-team-player", methods={"POST"})
      */
     public function createTeamPlayers(SoccerService $soccerService,\Symfony\Component\HttpFoundation\Request $request){
         $requestData = json_decode($request->getContent(),true);
         $result = $soccerService->createTeamPlayers($requestData['team'], $requestData['players']);
-        return $this->json(['status' => $result ]);
+        return $this->json(['status' => 'success', 'data' => $result ]);
     }
 }
